@@ -39,4 +39,14 @@ jobs:
       name: webstore-prod
     
     steps:
-     - name:  
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: webstore
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: web1-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
